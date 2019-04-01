@@ -1,14 +1,14 @@
-'use strict';
+"use strict";
 
 // Counting Sheep Drill
 
 const countingSheep = function(n) {
   //base case
   if (n === 0) {
-    return 'All sheep jumped over the fence';
+    return "All sheep jumped over the fence";
   } else {
     return (
-      `${n}: Another sheep jumps over the fence` + '\n' + countingSheep(n - 1)
+      `${n}: Another sheep jumps over the fence` + "\n" + countingSheep(n - 1)
     );
   }
 };
@@ -23,7 +23,7 @@ const powerCalculator = function(base, exp) {
   }
   //if exp is negative
   else if (exp < 0) {
-    return 'exponent should be >= 0';
+    return "exponent should be >= 0";
   }
   //while exp is positive
   else {
@@ -39,7 +39,7 @@ const powerCalculator = function(base, exp) {
 
 const reverseString = function(string) {
   if (string.length === 0) {
-    return '';
+    return "";
   } else {
     return (
       string[string.length - 1] +
@@ -67,7 +67,7 @@ const nthTriangle = function(n) {
 const stringSplitter = function(string, separator) {
   //base case
   if (string.length === 0) {
-    return '';
+    return "";
   } else if (string[0] === separator) {
     return stringSplitter(string.slice(1), separator);
   } else {
@@ -122,17 +122,41 @@ const anagrams = function(word) {
 
 // console.log(anagrams("east"));
 
+let maze = [
+  [" ", " ", " ", "*", " ", " ", " "],
+  ["*", "*", " ", "*", " ", "*", " "],
+  [" ", " ", " ", " ", " ", " ", " "],
+  [" ", "*", "*", "*", "*", "*", " "],
+  [" ", " ", " ", " ", " ", " ", "e"]
+];
+
+const mazeRunner = function(maze, x = 0, y = 0) {
+  maze[x][y] = "visited";
+  if (maze[x][y] === "e") {
+    return ` Maze solved at ${x} and ${y}`;
+  }
+  if (x + 1 < maze.length && maze[x + 1][y] === " ") {
+    // mazePath += "R";
+    return "D" + mazeRunner(maze, x + 1, y);
+  }
+  if (y + 1 < maze[x].length && maze[x][y + 1] === " ") {
+    // mazePath += "D";
+    return "R" + mazeRunner(maze, x, y + 1);
+  }
+};
+console.log(mazeRunner(maze), maze);
+
 const binaryRep = function(n) {
   if (n === 0) {
-    return '0';
+    return "0";
   }
   if (n === 1) {
-    return '1';
+    return "1";
   }
   if (n % 2 === 0) {
-    return binaryRep(n / 2) + '0';
+    return binaryRep(n / 2) + "0";
   } else {
-    return binaryRep((n - 1) / 2) + '1';
+    return binaryRep((n - 1) / 2) + "1";
   }
 };
 
@@ -142,69 +166,69 @@ const binaryRep = function(n) {
 // console.log(binaryRep(3));
 // console.log(binaryRep(25));
 
-
 const facebook = [
-  { 
+  {
     Zuckerberg: {
       Schroepfer: {
         Bosworth: {
-          Steve: 'Steve',
-          Kyle: 'Kyle',
-          Andra: 'Andra',
+          Steve: "Steve",
+          Kyle: "Kyle",
+          Andra: "Andra"
         },
         Zhao: {
-          Richie: 'Richie',
-          Sofia: 'Sofia',
-        },
+          Richie: "Richie",
+          Sofia: "Sofia"
+        }
       },
       Schrage: {
         VanDyck: {
-          Sabrina: 'Sabrina',
-          Michelle: 'Michelle',
-          Josh: 'Josh',
+          Sabrina: "Sabrina",
+          Michelle: "Michelle",
+          Josh: "Josh"
         },
         Swain: {
-          Blanch: 'Blanch',
-          Tom: 'Tom',
-          Joe: 'Joe',
-        },
+          Blanch: "Blanch",
+          Tom: "Tom",
+          Joe: "Joe"
+        }
       },
       Sandberg: {
         Goler: {
-          Eddie: 'Eddie',
-          Julie: 'Julie',
-          Annie: 'Annie',
+          Eddie: "Eddie",
+          Julie: "Julie",
+          Annie: "Annie"
         },
         Hernandez: {
-          Rowi: 'Rowi',
-          Inga: 'Inga',
-          Morgan: 'Morgan',
+          Rowi: "Rowi",
+          Inga: "Inga",
+          Morgan: "Morgan"
         },
         Moissinac: {
-          Amy: 'Amy',
-          Chuck: 'Chuck',
-          Vinni: 'Vinni',
+          Amy: "Amy",
+          Chuck: "Chuck",
+          Vinni: "Vinni"
         },
         Kelley: {
-          Eric: 'Eric',
-          Ana: 'Ana',
-          Wes: 'Wes',
+          Eric: "Eric",
+          Ana: "Ana",
+          Wes: "Wes"
         }
       }
-    },
-  }];
+    }
+  }
+];
 
 const orgChart = function(org) {
   //base case is key
-  if(Object.keys(org).length === 0) {
+  if (Object.keys(org).length === 0) {
     return org;
   }
 
-  for( let key in org ) {
-    if(org.hasOwnProperty(key)) {
+  for (let key in org) {
+    if (org.hasOwnProperty(key)) {
       return org[key] + orgChart(Object.keys(org));
     }
   }
 };
 
-console.log(orgChart(facebook));
+// console.log(orgChart(facebook));
