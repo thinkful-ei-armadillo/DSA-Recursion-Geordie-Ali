@@ -1,14 +1,14 @@
-"use strict";
+'use strict';
 
 // Counting Sheep Drill
 
 const countingSheep = function(n) {
   //base case
   if (n === 0) {
-    return "All sheep jumped over the fence";
+    return 'All sheep jumped over the fence';
   } else {
     return (
-      `${n}: Another sheep jumps over the fence` + "\n" + countingSheep(n - 1)
+      `${n}: Another sheep jumps over the fence` + '\n' + countingSheep(n - 1)
     );
   }
 };
@@ -23,7 +23,7 @@ const powerCalculator = function(base, exp) {
   }
   //if exp is negative
   else if (exp < 0) {
-    return "exponent should be >= 0";
+    return 'exponent should be >= 0';
   }
   //while exp is positive
   else {
@@ -39,7 +39,7 @@ const powerCalculator = function(base, exp) {
 
 const reverseString = function(string) {
   if (string.length === 0) {
-    return "";
+    return '';
   } else {
     return (
       string[string.length - 1] +
@@ -67,7 +67,7 @@ const nthTriangle = function(n) {
 const stringSplitter = function(string, separator) {
   //base case
   if (string.length === 0) {
-    return "";
+    return '';
   } else if (string[0] === separator) {
     return stringSplitter(string.slice(1), separator);
   } else {
@@ -123,40 +123,91 @@ const anagrams = function(word) {
 // console.log(anagrams("east"));
 
 let maze = [
-  [" ", " ", " ", "*", " ", " ", " "],
-  ["*", "*", " ", "*", " ", "*", " "],
-  [" ", " ", " ", " ", " ", " ", " "],
-  [" ", "*", "*", "*", "*", "*", " "],
-  [" ", " ", " ", " ", " ", " ", "e"]
+  [' ', ' ', ' ', '*', ' ', ' ', ' '],
+  ['*', '*', ' ', '*', ' ', '*', ' '],
+  [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+  [' ', '*', '*', '*', '*', '*', ' '],
+  [' ', ' ', ' ', ' ', ' ', ' ', 'e']
 ];
 
-const mazeRunner = function(maze, x = 0, y = 0) {
-  maze[x][y] = "visited";
-  if (maze[x][y] === "e") {
-    return ` Maze solved at ${x} and ${y}`;
+
+const mazeRunner = function(maze, position=0, x = 0, y = 0, direction='S', path = []){
+  if(y<0 || x < 0){
+    return;
   }
-  if (x + 1 < maze.length && maze[x + 1][y] === " ") {
-    // mazePath += "R";
-    return "D" + mazeRunner(maze, x + 1, y);
+  if(y>=maze[0].length || x>=maze.length){
+    return;
   }
-  if (y + 1 < maze[x].length && maze[x][y + 1] === " ") {
-    // mazePath += "D";
-    return "R" + mazeRunner(maze, x, y + 1);
+  path[position] = direction;
+  position++;
+
+  if (maze[x][y] === 'e'){
+    PrintPath(path, 1, position - 1);
+    return;
   }
+  if (maze[x][y] === ' ') {
+    // The current cell is free. Mark it as visited
+    maze[x][y] = 's';
+    // Invoke recursion to explore all possible directions
+    mazeRunner(maze,position,x, y - 1, 'L',path); // left
+    mazeRunner(maze,position,x - 1, y, 'U',path); // up
+    mazeRunner(maze,position,x, y + 1, 'R',path); // right
+    mazeRunner(maze,position,x + 1, y, 'D',path); // down
+  }
+  // Remove the last direction from the path
+  position--;
+
 };
-console.log(mazeRunner(maze), maze);
+const PrintPath = function (path, startPos, endPos){
+  console.log('Found path to the exit: ');
+  console.log(path);
+};
+
+// console.log(mazeRunner(maze), maze);
+
+const mazeRunnerAll = function(maze, position=0, x = 0, y = 0, direction='S', path = []){
+  if(y<0 || x < 0){
+    return;
+  }
+  if(y>=maze[0].length || x>=maze.length){
+    return;
+  }
+  path[position] = direction;
+  position++;
+
+  if (maze[x][y] === 'e'){
+    PrintPath(path, 1, position - 1);
+    return;
+  }
+  if (maze[x][y] === ' ') {
+    // The current cell is free. Mark it as visited
+    maze[x][y] = 's';
+    // Invoke recursion to explore all possible directions
+    mazeRunnerAll(maze,position,x, y - 1, 'L',path); // left
+    mazeRunnerAll(maze,position,x - 1, y, 'U',path); // up
+    mazeRunnerAll(maze,position,x, y + 1, 'R',path); // right
+    mazeRunnerAll(maze,position,x + 1, y, 'D',path); // down
+    //remarks current position as unvisited so we can check back for all exits
+    maze[x][y] = ' ';
+  }
+  // Remove the last direction from the path
+  position--;
+
+};
+
+// console.log(mazeRunnerAll(maze));
 
 const binaryRep = function(n) {
   if (n === 0) {
-    return "0";
+    return '0';
   }
   if (n === 1) {
-    return "1";
+    return '1';
   }
   if (n % 2 === 0) {
-    return binaryRep(n / 2) + "0";
+    return binaryRep(n / 2) + '0';
   } else {
-    return binaryRep((n - 1) / 2) + "1";
+    return binaryRep((n - 1) / 2) + '1';
   }
 };
 
@@ -166,69 +217,62 @@ const binaryRep = function(n) {
 // console.log(binaryRep(3));
 // console.log(binaryRep(25));
 
-const facebook = [
+const facebook =
   {
     Zuckerberg: {
       Schroepfer: {
         Bosworth: {
-          Steve: "Steve",
-          Kyle: "Kyle",
-          Andra: "Andra"
+          Steve: {},
+          Kyle: {},
+          Andra: {}
         },
         Zhao: {
-          Richie: "Richie",
-          Sofia: "Sofia"
+          Richie: {},
+          Sofia: {}
         }
       },
       Schrage: {
         VanDyck: {
-          Sabrina: "Sabrina",
-          Michelle: "Michelle",
-          Josh: "Josh"
+          Sabrina: {},
+          Michelle: {},
+          Josh: {}
         },
         Swain: {
-          Blanch: "Blanch",
-          Tom: "Tom",
-          Joe: "Joe"
+          Blanch: {},
+          Tom: {},
+          Joe: {}
         }
       },
       Sandberg: {
         Goler: {
-          Eddie: "Eddie",
-          Julie: "Julie",
-          Annie: "Annie"
+          Eddie: {},
+          Julie: {},
+          Annie: {}
         },
         Hernandez: {
-          Rowi: "Rowi",
-          Inga: "Inga",
-          Morgan: "Morgan"
+          Rowi: {},
+          Inga: {},
+          Morgan: {}
         },
         Moissinac: {
-          Amy: "Amy",
-          Chuck: "Chuck",
-          Vinni: "Vinni"
+          Amy: {},
+          Chuck: {},
+          Vinni: {}
         },
         Kelley: {
-          Eric: "Eric",
-          Ana: "Ana",
-          Wes: "Wes"
+          Eric: {},
+          Ana: {},
+          Wes: {}
         }
       }
     }
-  }
-];
+  };
 
-const orgChart = function(org) {
-  //base case is key
-  if (Object.keys(org).length === 0) {
-    return org;
-  }
-
-  for (let key in org) {
-    if (org.hasOwnProperty(key)) {
-      return org[key] + orgChart(Object.keys(org));
-    }
+const orgChart = function(org, indent = 0) {
+  for (var key in org) {
+    console.log(' '.repeat(indent), key);
+    orgChart(org[key], indent + 4);
   }
 };
 
-// console.log(orgChart(facebook));
+console.log(orgChart(facebook));
